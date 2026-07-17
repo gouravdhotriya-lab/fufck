@@ -17,7 +17,7 @@ function connectBot() {
   const bot = mineflayer.createBot({
     host: 'nl-01.freezehost.pro', 
     port: 8425,              
-    username: 'AntiAfkBot',   
+    username: 'spawn',   
     version: '1.20.1'  // CHANGE THIS to your exact server version (e.g., '1.19.4', '1.20.4', etc.)
   });
 

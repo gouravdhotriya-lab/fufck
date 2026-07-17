@@ -15,7 +15,7 @@ app.listen(port, () => {
 const bot = mineflayer.createBot({
   host: 'nl-01.freezehost.pro', // IMPORTANT: Change this to your real server IP
   port: 8425,              // Change this if your server uses a different port
-  username: 'AntiAfkBot',   // The name your bot will use in the game
+  username: 'spawn',   // The name your bot will use in the game
   version: false            // Automatically detects your Minecraft server version
 });
 

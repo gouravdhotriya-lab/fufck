@@ -12,20 +12,20 @@ app.listen(port, () => {
 
 // --- 2. Minecraft Bot Code with Auto-Reconnect ---
 function connectBot() {
-  console.log('Connecting to the server...');
+  console.log('Attempting to connect to the server...');
 
   const bot = mineflayer.createBot({
     host: 'nl-01.freezehost.pro', 
     port: 8425,              
     username: 'AntiAfkBot',   
-    version: false            
+    version: '1.20.1'  // CHANGE THIS to your exact server version (e.g., '1.19.4', '1.20.4', etc.)
   });
 
   // When the bot successfully joins the active world
   bot.on('spawn', () => {
-    console.log('Bot has successfully joined the Minecraft server!');
+    console.log('✅ Bot has successfully joined the Minecraft server!');
     
-    // Anti-AFK jumping
+    // Anti-AFK jumping every 10 seconds
     setInterval(() => {
       bot.setControlState('jump', true);
       setTimeout(() => {
@@ -34,18 +34,23 @@ function connectBot() {
     }, 10000);
   });
 
-  // If the bot gets kicked (like when waking up the server)
+  // If the bot gets disconnected or kicked
   bot.on('end', (reason) => {
-    console.log(`Bot disconnected. Reason: ${reason}`);
-    console.log('Server might be waking up or offline. Retrying in 30 seconds...');
+    console.log(`❌ Bot disconnected. Reason: ${reason}`);
+    console.log('🔄 Server might be waking up. Retrying in 30 seconds...');
     
-    // Wait 30 seconds, then try to connect again
+    // Wait 30 seconds, then try to reconnect
     setTimeout(connectBot, 30000);
   });
 
-  // Log errors without crashing the app
+  // Log errors without stopping the app
   bot.on('error', (err) => {
-    console.log('Bot Error: ', err.message);
+    console.log('⚠️ Bot Error:', err.message);
+  });
+
+  // Log when bot is kicked by the server
+  bot.on('kicked', (reason) => {
+    console.log('🚪 Bot was kicked. Reason:', reason);
   });
 }
 
